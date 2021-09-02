@@ -1,0 +1,31 @@
+{
+  "name": "fullstack_part4",
+  "version": "1.0.0",
+  "description": "https://fullstackopen.com/en/part4\r Open university FullStack course exercises for part 4.",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.8",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samikuikka/FullStack_part4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samikuikka/FullStack_part4/issues"
+  },
+  "homepage": "https://github.com/samikuikka/FullStack_part4#readme"
+}
