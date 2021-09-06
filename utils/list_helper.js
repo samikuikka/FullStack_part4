@@ -29,9 +29,23 @@ const mostBlogs = (blogs) => {
   return { author: author, blogs: amount }
 }
 
+const mostLikes = (blogs) => {
+  //Check if empty
+  if(blogs.length === 0) return {}
+
+  const authors = _.groupBy(blogs, 'author')
+  const x = _.sortBy(authors, author => {
+    return author.reduce((sum, blog) => sum + blog.likes, 0)
+  }).pop()
+  const author = x[0].author
+  const likes  = x.reduce((sum, blog) => sum + blog.likes, 0)
+  return { author: author, likes: likes }
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
