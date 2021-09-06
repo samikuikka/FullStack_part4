@@ -1,4 +1,4 @@
-
+var _ = require('lodash')
 
 const dummy = (blogs) => {
   blogs
@@ -17,8 +17,21 @@ const favoriteBlog = (blogs) => {
     }, {likes: -1})
 }
 
+const mostBlogs = (blogs) => {
+
+  //Check if empty
+  if(blogs.length === 0) return {}
+
+  const authors = _.groupBy(blogs, 'author')
+  const x = _.sortBy(authors, author => author.length).pop()
+  const author = x[0].author
+  const amount = x.length
+  return { author: author, blogs: amount }
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
