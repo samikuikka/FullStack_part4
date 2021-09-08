@@ -34,12 +34,12 @@ test('all blogs have an property id', async () => {
   const response = await api.get('/api/blogs')
   let flag = true
   response.body.forEach(blog => {
-    if(!Object.prototype.hasOwnProperty.call(blog, '_id')) flag = false
+    if(!Object.prototype.hasOwnProperty.call(blog, 'id')) flag = false
   })
   expect(flag).toBe(true)
 })
 
-test.only('a valid blog can be added', async () => {
+test('a valid blog can be added', async () => {
   const newBlog = {
     title: 'How to add blogs',
     author: 'Paul',
@@ -59,6 +59,24 @@ test.only('a valid blog can be added', async () => {
 
   const content = blogs.map(x => x.title)
   expect(content).toContain('How to add blogs')
+})
+
+test('if likes property missing, it will default to the value 0', async () => {
+  const newBlog = {
+    title: 'How to write spaghetticode',
+    author: 'Teekkari Teemu',
+    url: 'http://teekkariteemucodes.fi',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+
+  const blogs = await helper.blogsInDb()
+  const blog = blogs[helper.initialBlogs.length]
+
+  expect(blog.likes).toBe(0)
 })
 
 afterAll(() => {
