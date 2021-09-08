@@ -54,7 +54,6 @@ test('a valid blog can be added', async () => {
     .expect('Content-Type', /application\/json/)
 
   const blogs = await helper.blogsInDb()
-  console.log(blogs)
   expect(blogs).toHaveLength(helper.initialBlogs.length +1)
 
   const content = blogs.map(x => x.title)
@@ -77,6 +76,39 @@ test('if likes property missing, it will default to the value 0', async () => {
   const blog = blogs[helper.initialBlogs.length]
 
   expect(blog.likes).toBe(0)
+})
+
+describe('can not create blogs without: ', () => {
+
+  test('title', async() => {
+    const newBlog = {
+      author: 'Teekkari Teemu',
+      url: 'http://teekkariteemucodes.fi',
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogs = await helper.initialBlogs
+    expect(blogs).toHaveLength(helper.initialBlogs.length)
+  })
+
+  test('url', async()=> {
+    const newBlog = {
+      title: 'How to write spaghetticode',
+      author: 'Teekkari Teemu',
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogs = await helper.initialBlogs
+    expect(blogs).toHaveLength(helper.initialBlogs.length)
+  })
 })
 
 afterAll(() => {
