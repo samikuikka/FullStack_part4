@@ -30,6 +30,15 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
+test.only('all blogs have an property id', async () => {
+  const response = await api.get('/api/blogs')
+  let flag = true
+  response.body.forEach(blog => {
+    if(!Object.prototype.hasOwnProperty.call(blog, '_id')) flag = false
+  })
+  expect(flag).toBe(true)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
