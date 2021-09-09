@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCIpXVCJ9.eyJ1c2VybmFtZSI6Imxvb24iLCJpZCI6IjYxMzllYzc5NWIzYWI2MjhlMGFmZDFkOSIsImlhdCI6MTYzMTE4NjA2MX0.77I8SLURPhF2e5dtITyLVoCvxdDJcHlPaGnMISerKEY
 
 {
-  "title": "Using await / async",
-  "author": "Async man",
-  "url": "http://dusafhuaidshf.com",
-  "likes": 9
+  "title": "How to create blogs",
+  "author": "Loon",
+  "url": "http://asdagadsfg.com",
+  "likes": 94
 }
