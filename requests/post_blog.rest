@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvb24iLCJpZCI6IjYxMzllYzc5NWIzYWI2MjhlMGFmZDFkOSIsImlhdCI6MTYzMTE4NjkyOH0.mSvnyVHUpeBnbHSflnryqkjq4YhQ-kmXaQ8-_LsbGIs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvb24iLCJpZCI6IjYxMzllYzc5NWIzYWI2MjhlMGFmZDFkOSIsImlhdCI6MTYzMTE4NzUzMn0.tioxTOUviHdknIcL_Cva4H9s_85Zh9W9dNjhF25I0PM
 
 {
   "title": "How to delete blogs",
