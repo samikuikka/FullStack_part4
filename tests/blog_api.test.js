@@ -60,6 +60,7 @@ test('a valid blog can be added', async () => {
 
   const content = blogs.map(x => x.title)
   expect(content).toContain('How to add blogs')
+
 })
 
 test('if likes property missing, it will default to the value 0', async () => {
@@ -125,8 +126,30 @@ describe('user creation', () => {
 
     await user.save()
   })
+
+  test('works with fresh username', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      username: 'Sami',
+      name: 'Sami Kuikka',
+      password: 'salainen',
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+
+    const usernames = usersAtEnd.map(u => u.username)
+    expect(usernames).toContain(newUser.username)
+  })
   
-  test.only('fails with proper statuscode and message if username already taken', async () => {
+  test('fails with proper statuscode and message if username already taken', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -147,7 +170,7 @@ describe('user creation', () => {
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
 
-  test.only('fails with proper statuscode when username invalid', async() => {
+  test('fails with proper statuscode when username invalid', async() => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
@@ -166,7 +189,7 @@ describe('user creation', () => {
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
 
-  test.only('fails with proper statuscode when password invalid', async() => {
+  test('fails with proper statuscode when password invalid', async() => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
