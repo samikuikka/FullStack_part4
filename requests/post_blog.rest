@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCIpXVCJ9.eyJ1c2VybmFtZSI6Imxvb24iLCJpZCI6IjYxMzllYzc5NWIzYWI2MjhlMGFmZDFkOSIsImlhdCI6MTYzMTE4NjA2MX0.77I8SLURPhF2e5dtITyLVoCvxdDJcHlPaGnMISerKEY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxvb24iLCJpZCI6IjYxMzllYzc5NWIzYWI2MjhlMGFmZDFkOSIsImlhdCI6MTYzMTE4NjkyOH0.mSvnyVHUpeBnbHSflnryqkjq4YhQ-kmXaQ8-_LsbGIs
 
 {
-  "title": "How to create blogs",
+  "title": "How to delete blogs",
   "author": "Loon",
   "url": "http://asdagadsfg.com",
-  "likes": 94
+  "likes": 0
 }
