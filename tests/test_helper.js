@@ -9,7 +9,7 @@ const initialBlogs = [
     likes: 1572,
   },
   {
-    title: 'My second test blog',
+    title: 'My secoond test blog',
     author: 'Loon',
     url: 'http://loon-blog2.com',
     likes: 146,
@@ -21,6 +21,7 @@ const initialBlogs = [
     likes: 1,
   }
 ]
+
 
 const blogsInDb = async () => {
   const blogs = await Blog.find({})

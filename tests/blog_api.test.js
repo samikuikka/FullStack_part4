@@ -10,7 +10,9 @@ const Blog = require('../models/blog')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
+  await User.deleteMany({})
 
+  
   const blogObjects = helper.initialBlogs
     .map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
@@ -41,47 +43,75 @@ test('all blogs have an property id', async () => {
   expect(flag).toBe(true)
 })
 
-test('a valid blog can be added', async () => {
-  const newBlog = {
-    title: 'How to add blogs',
-    author: 'Paul',
-    url: 'http://paulblogging.com',
-    likes: 100
-  }
+describe('adding blogs: ', () => {
+  let token = null
+  beforeEach(async () => {
+    await User.deleteMany({})
 
-  await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
+    await user.save()
+    const result = await api.post('/api/login')
+      .send( { username: 'root', password: 'sekret'})
+    token = result.body.token
+  })
 
-  const blogs = await helper.blogsInDb()
-  expect(blogs).toHaveLength(helper.initialBlogs.length +1)
-
-  const content = blogs.map(x => x.title)
-  expect(content).toContain('How to add blogs')
-
-})
-
-test('if likes property missing, it will default to the value 0', async () => {
-  const newBlog = {
-    title: 'How to write spaghetticode',
-    author: 'Teekkari Teemu',
-    url: 'http://teekkariteemucodes.fi',
-  }
-
-  await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(201)
-
-  const blogs = await helper.blogsInDb()
-  const blog = blogs[helper.initialBlogs.length]
-
-  expect(blog.likes).toBe(0)
+  test('a valid blog can be added', async () => {
+    const newBlog = {
+      title: 'How to add blogs',
+      author: 'Paul',
+      url: 'http://paulblogging.com',
+      likes: 100
+    }
+  
+    await api
+      .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+  
+    const blogs = await helper.blogsInDb()
+    expect(blogs).toHaveLength(helper.initialBlogs.length +1)
+  
+    const content = blogs.map(x => x.title)
+    expect(content).toContain('How to add blogs')
+  
+  })
+  
+  test('if likes property missing, it will default to the value 0', async () => {
+    const newBlog = {
+      title: 'How to write spaghetticode',
+      author: 'Teekkari Teemu',
+      url: 'http://teekkariteemucodes.fi',
+    }
+  
+    await api
+      .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
+      .send(newBlog)
+      .expect(201)
+  
+    const blogs = await helper.blogsInDb()
+    const blog = blogs[helper.initialBlogs.length]
+  
+    expect(blog.likes).toBe(0)
+  })
 })
 
 describe('can not create blogs without: ', () => {
+
+  let token = null
+  beforeEach(async () => {
+    await User.deleteMany({})
+
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
+    await user.save()
+    const result = await api.post('/api/login')
+      .send( { username: 'root', password: 'sekret'})
+    token = result.body.token
+  })
 
   test('title', async() => {
     const newBlog = {
@@ -91,6 +121,7 @@ describe('can not create blogs without: ', () => {
 
     await api
       .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
       .send(newBlog)
       .expect(400)
 
@@ -106,6 +137,7 @@ describe('can not create blogs without: ', () => {
 
     await api
       .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
       .send(newBlog)
       .expect(400)
 
