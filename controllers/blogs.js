@@ -21,8 +21,8 @@ blogsRouter.post('/:id/comments', async (request, response) => {
 
   const savedComment = await comment.save()
   blog.comments = blog.comments.concat(savedComment._id)
-  await blog.save()
-  response.status(201).json(savedComment)
+  const savedBlog = await blog.save()
+  response.status(201).json(savedBlog)
 })
 
   
